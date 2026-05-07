@@ -20,7 +20,7 @@ export const StatsGrid = () => {
       {statItems.map((item) => (
         <article
           key={item.key}
-          className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-cyan-800"
+          className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft transition dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-cyan-800"
         >
           <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{item.label}</p>
           <p className="mt-2 text-3xl font-semibold text-slate-950 dark:text-white">
@@ -29,7 +29,7 @@ export const StatsGrid = () => {
         </article>
       ))}
 
-      <article className="rounded-lg border border-cyan-200 bg-cyan-50 p-4 shadow-soft transition hover:-translate-y-0.5 dark:border-cyan-900/80 dark:bg-cyan-950/30">
+      <article className="rounded-lg border border-cyan-200 bg-cyan-50 p-4 shadow-soft dark:border-cyan-900/80 dark:bg-cyan-950/30">
         <p className="text-sm font-medium text-cyan-700 dark:text-cyan-300">Completion</p>
         <div className="mt-3 flex items-end justify-between gap-3">
           <p className="text-3xl font-semibold text-cyan-950 dark:text-cyan-100">{completion}%</p>
