@@ -6,13 +6,16 @@ export const Header = () => {
 
   return (
     <header className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-soft dark:border-neutral-800 dark:bg-neutral-900">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
-          Developer Operations
-        </p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-slate-950 dark:text-white">
-          DevDash
-        </h1>
+      <div className="flex items-center gap-5">
+        <img src="/logo.png" alt="DevDash Logo" className="h-20 w-20 object-contain rounded-xl shadow-sm" />
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
+            Developer Operations
+          </p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-normal text-slate-950 dark:text-white">
+            DevDash
+          </h1>
+        </div>
       </div>
 
       <button

@@ -1,7 +1,8 @@
-import { DragEvent, FormEvent, useEffect, useState } from 'react';
+import { DragEvent, FormEvent, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { focusedTaskIdState } from '../../atoms/ui';
-import type { AgedTask } from '../../selectors/agedTasks';
+import { Draggable } from '@hello-pangea/dnd';
+import { focusedTaskIdState } from '../../state/atoms/uiAtom';
+import type { AgedTask } from '../../state/selectors/agedTasks';
 import { tasksState } from '../../state/atoms/tasksAtom';
 import {
   priorityLabels,
@@ -20,6 +21,7 @@ const priorityStyles: Record<TaskPriority, string> = {
 
 interface TaskCardProps {
   task: AgedTask;
+  index: number;
 }
 
 const formatCreatedDate = (createdAt: string) =>
@@ -42,41 +44,20 @@ const truncateNotes = (notes: string) => {
   return `${trimmedNotes.slice(0, maxPreviewLength).trim()}...`;
 };
 
-export const TaskCard = ({ task }: TaskCardProps) => {
+export const TaskCard = ({ task, index }: TaskCardProps) => {
   const setTasks = useSetRecoilState(tasksState);
   const setFocusedTaskId = useSetRecoilState(focusedTaskIdState);
   const focusedTaskId = useRecoilValue(focusedTaskIdState);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isDragEnabled, setIsDragEnabled] = useState(false);
   const [notesDraft, setNotesDraft] = useState(task.notes);
   const isFocused = focusedTaskId === task.id;
   const notesPreview = truncateNotes(task.notes);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 640px)');
-    const updateDragPreference = () => setIsDragEnabled(mediaQuery.matches);
-
-    updateDragPreference();
-    mediaQuery.addEventListener('change', updateDragPreference);
-
-    return () => mediaQuery.removeEventListener('change', updateDragPreference);
-  }, []);
 
   const toggleFocus = () => {
     setFocusedTaskId((currentFocusedTaskId) =>
       currentFocusedTaskId === task.id ? null : task.id,
     );
-  };
-
-  const handleDragStart = (event: DragEvent<HTMLElement>) => {
-    if (!isDragEnabled) {
-      event.preventDefault();
-      return;
-    }
-
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/plain', task.id);
   };
 
   const updateStatus = (status: TaskStatus) => {
@@ -129,15 +110,20 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
   return (
     <>
-      <article
-        className={`group rounded-lg border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
-          isFocused
-            ? 'border-cyan-400 bg-cyan-50 shadow-lg ring-2 ring-cyan-500/25 dark:border-cyan-600 dark:bg-cyan-950/40 dark:ring-cyan-400/25'
-            : 'border-slate-300 bg-white hover:border-cyan-300 dark:border-neutral-700 dark:bg-neutral-950 dark:hover:border-cyan-700'
-        }`}
-        draggable={isDragEnabled}
-        onDragStart={handleDragStart}
-      >
+      <Draggable draggableId={task.id} index={index}>
+        {(provided, snapshot) => {
+          const isDragging = snapshot.isDragging;
+          return (
+            <article
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              className={`group rounded-lg border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
+                isFocused
+                  ? 'border-cyan-400 bg-cyan-50 shadow-lg ring-2 ring-cyan-500/25 dark:border-cyan-600 dark:bg-cyan-950/40 dark:ring-cyan-400/25'
+                  : 'border-slate-300 bg-white hover:border-cyan-300 dark:border-neutral-700 dark:bg-neutral-950 dark:hover:border-cyan-700'
+              } ${isDragging ? 'opacity-50 scale-95 shadow-xl rotate-2 ring-2 ring-cyan-400' : 'opacity-100 scale-100'}`}
+            >
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
@@ -251,6 +237,9 @@ export const TaskCard = ({ task }: TaskCardProps) => {
           </div>
         </footer>
       </article>
+      );
+      }}
+      </Draggable>
 
       {isNotesModalOpen && (
         <div

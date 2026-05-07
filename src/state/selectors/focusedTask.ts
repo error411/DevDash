@@ -1,7 +1,7 @@
 import { selector } from 'recoil';
-import { tasksState } from '../state/atoms/tasksAtom';
-import type { Task } from '../types/task';
-import { focusedTaskIdState } from '../atoms/ui';
+import { tasksState } from '../atoms/tasksAtom';
+import type { Task } from '../../types/task';
+import { focusedTaskIdState } from '../atoms/uiAtom';
 
 export const focusedTaskSelector = selector<Task | null>({
   key: 'focusedTaskSelector',

@@ -1,16 +1,32 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { filtersState } from '../../state/atoms/filtersAtom';
 import { availableTagsSelector } from '../../state/selectors/taskSelectors';
 import { priorityLabels, type TaskFilters, type TaskPriority } from '../../types/task';
+import { useDebounce } from '../../hooks/useDebounce';
 
 export const SearchFilters = () => {
   const [filters, setFilters] = useRecoilState(filtersState);
   const tags = useRecoilValue(availableTagsSelector);
+  const [localSearch, setLocalSearch] = useState(filters.search);
+  const debouncedSearch = useDebounce(localSearch, 250);
 
   const updateFilter = <Key extends keyof TaskFilters>(key: Key, value: TaskFilters[Key]) => {
     setFilters((current) => ({ ...current, [key]: value }));
   };
+
+  useEffect(() => {
+    if (debouncedSearch !== filters.search) {
+      updateFilter('search', debouncedSearch);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (filters.search === '') {
+      setLocalSearch('');
+    }
+  }, [filters.search]);
 
   const handlePriorityChange = (event: ChangeEvent<HTMLSelectElement>) => {
     updateFilter('priority', event.target.value as TaskPriority | 'all');
@@ -21,8 +37,8 @@ export const SearchFilters = () => {
       <input
         className="field"
         type="search"
-        value={filters.search}
-        onChange={(event) => updateFilter('search', event.target.value)}
+        value={localSearch}
+        onChange={(event) => setLocalSearch(event.target.value)}
         placeholder="Search title, description, or tag"
         aria-label="Search tasks"
       />

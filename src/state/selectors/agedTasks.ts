@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
-import { tasksState } from '../state/atoms/tasksAtom';
-import type { Task } from '../types/task';
+import { tasksState } from '../atoms/tasksAtom';
+import type { Task } from '../../types/task';
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 

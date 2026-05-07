@@ -6,3 +6,8 @@ export const darkModeState = atom<boolean>({
   default: false,
   effects: [localStorageEffect<boolean>('devdash.darkMode')],
 });
+
+export const focusedTaskIdState = atom<string | null>({
+  key: 'focusedTaskIdState',
+  default: null,
+});

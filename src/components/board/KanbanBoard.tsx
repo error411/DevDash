@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { agedTasksSelector } from '../../selectors/agedTasks';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import { agedTasksSelector } from '../../state/selectors/agedTasks';
 import { filteredTasksSelector } from '../../state/selectors/taskSelectors';
+import { tasksState } from '../../state/atoms/tasksAtom';
 import { taskStatuses } from '../../types/task';
 import type { TaskStatus } from '../../types/task';
 import { KanbanColumn } from './KanbanColumn';
@@ -9,6 +11,7 @@ import { KanbanColumn } from './KanbanColumn';
 export const KanbanBoard = () => {
   const filteredTasks = useRecoilValue(filteredTasksSelector);
   const agedTasks = useRecoilValue(agedTasksSelector);
+  const setTasks = useSetRecoilState(tasksState);
 
   const filteredTaskIds = useMemo(
     () => new Set(filteredTasks.map((task) => task.id)),
@@ -37,11 +40,34 @@ export const KanbanBoard = () => {
     [tasks],
   );
 
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === draggableId ? { ...task, status: destination.droppableId as TaskStatus } : task
+      ),
+    );
+  };
+
   return (
-    <section className="grid flex-1 gap-5 sm:gap-4 xl:grid-cols-4">
-      {taskStatuses.map((status) => (
-        <KanbanColumn key={status} status={status} tasks={tasksByStatus[status]} />
-      ))}
-    </section>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <section className="grid flex-1 gap-5 sm:gap-4 xl:grid-cols-4">
+        {taskStatuses.map((status) => (
+          <KanbanColumn key={status} status={status} tasks={tasksByStatus[status]} />
+        ))}
+      </section>
+    </DragDropContext>
   );
 };

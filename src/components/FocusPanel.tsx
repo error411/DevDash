@@ -1,6 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { focusedTaskIdState } from '../atoms/ui';
-import { focusedTaskSelector } from '../selectors/focusedTask';
+import { focusedTaskIdState } from '../state/atoms/uiAtom';
+import { focusedTaskSelector } from '../state/selectors/focusedTask';
 
 export const FocusPanel = () => {
   const focusedTask = useRecoilValue(focusedTaskSelector);
