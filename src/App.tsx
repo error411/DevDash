@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from './components/layout/Header';
 import { SearchFilters } from './components/filters/SearchFilters';
 import { FocusPanel } from './components/FocusPanel';
@@ -32,6 +33,7 @@ const App = () => {
           <NewTaskForm />
         </div>
       </div>
+      <Analytics />
     </main>
   );
 };
