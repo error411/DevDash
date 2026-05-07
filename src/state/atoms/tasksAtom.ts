@@ -10,6 +10,7 @@ const migrateTasks = (tasks: Task[]) =>
     ...task,
     createdAt: task.createdAt ?? seedTasksById.get(task.id)?.createdAt ?? new Date().toISOString(),
     project: task.project ?? seedTasksById.get(task.id)?.project ?? 'Unassigned',
+    notes: task.notes ?? seedTasksById.get(task.id)?.notes ?? '',
   }));
 
 export const tasksState = atom<Task[]>({

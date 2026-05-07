@@ -7,6 +7,7 @@ export interface Task {
   title: string;
   description: string;
   project: string;
+  notes: string;
   priority: TaskPriority;
   tags: string[];
   estimatedHours: number;

@@ -14,6 +14,7 @@ interface NewTaskFormState {
   title: string;
   description: string;
   project: string;
+  notes: string;
   priority: TaskPriority;
   tags: string;
   estimatedHours: string;
@@ -24,6 +25,7 @@ const initialFormState: NewTaskFormState = {
   title: '',
   description: '',
   project: '',
+  notes: '',
   priority: 'medium',
   tags: '',
   estimatedHours: '1',
@@ -72,6 +74,7 @@ export const NewTaskForm = () => {
       title,
       description: form.description.trim(),
       project: form.project.trim() || 'Unassigned',
+      notes: form.notes.trim(),
       priority: form.priority,
       tags: parseTags(form.tags),
       estimatedHours,
@@ -166,6 +169,14 @@ export const NewTaskForm = () => {
                 onChange={(event) => updateForm('project', event.target.value)}
                 placeholder="Project, e.g. Viking Battery Website"
                 aria-label="Project"
+              />
+
+              <textarea
+                className="min-h-24 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-neutral-700 dark:bg-neutral-950 dark:text-slate-100 md:col-span-2"
+                value={form.notes}
+                onChange={(event) => updateForm('notes', event.target.value)}
+                placeholder="Notes"
+                aria-label="Task notes"
               />
 
               <select
