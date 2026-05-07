@@ -151,6 +151,8 @@ export const NewTaskForm = () => {
                 onChange={(event) => updateForm('project', event.target.value)}
                 placeholder="Project, e.g. Viking Battery Website"
                 aria-label="Project"
+                autoFocus
+                required
               />
               
               <input
@@ -159,7 +161,6 @@ export const NewTaskForm = () => {
                 onChange={(event) => updateForm('title', event.target.value)}
                 placeholder="Task title"
                 aria-label="Task title"
-                autoFocus
                 required
               />
 
