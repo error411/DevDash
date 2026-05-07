@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { Header } from './components/layout/Header';
 import { SearchFilters } from './components/filters/SearchFilters';
+import { FocusPanel } from './components/FocusPanel';
 import { StatsGrid } from './components/stats/StatsGrid';
 import { KanbanBoard } from './components/board/KanbanBoard';
 import { darkModeState } from './state/atoms/uiAtom';
@@ -18,6 +19,7 @@ const App = () => {
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-4 py-5 sm:px-6 lg:px-8">
         <Header />
         <StatsGrid />
+        <FocusPanel />
         <SearchFilters />
         <KanbanBoard />
       </div>

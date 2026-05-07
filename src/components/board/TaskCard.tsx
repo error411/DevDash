@@ -1,4 +1,5 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { focusedTaskIdState } from '../../atoms/ui';
 import { tasksState } from '../../state/atoms/tasksAtom';
 import {
   priorityLabels,
@@ -22,6 +23,9 @@ interface TaskCardProps {
 
 export const TaskCard = ({ task }: TaskCardProps) => {
   const setTasks = useSetRecoilState(tasksState);
+  const setFocusedTaskId = useSetRecoilState(focusedTaskIdState);
+  const focusedTaskId = useRecoilValue(focusedTaskIdState);
+  const isFocused = focusedTaskId === task.id;
 
   const updateStatus = (status: TaskStatus) => {
     setTasks((tasks) =>
@@ -32,7 +36,13 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   };
 
   return (
-    <article className="group rounded-lg border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-cyan-800">
+    <article
+      className={`group rounded-lg border p-4 transition hover:-translate-y-0.5 hover:shadow-md ${
+        isFocused
+          ? 'border-cyan-300 bg-cyan-50 shadow-md ring-2 ring-cyan-500/20 dark:border-cyan-700 dark:bg-cyan-950/30 dark:ring-cyan-400/20'
+          : 'border-slate-200 bg-white hover:border-cyan-200 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-cyan-800'
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base font-semibold leading-6 text-slate-950 dark:text-white">{task.title}</h3>
         <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${priorityStyles[task.priority]}`}>
@@ -73,6 +83,17 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             </option>
           ))}
         </select>
+        <button
+          type="button"
+          onClick={() => setFocusedTaskId(task.id)}
+          className={`h-10 rounded-md border px-3 text-sm font-semibold transition ${
+            isFocused
+              ? 'border-cyan-300 bg-cyan-600 text-white hover:bg-cyan-700 dark:border-cyan-600 dark:bg-cyan-500 dark:text-cyan-950 dark:hover:bg-cyan-400'
+              : 'border-slate-200 text-slate-700 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700 dark:border-neutral-700 dark:text-slate-200 dark:hover:border-cyan-700 dark:hover:bg-cyan-950/40 dark:hover:text-cyan-200'
+          }`}
+        >
+          {isFocused ? 'Focused' : 'Focus'}
+        </button>
       </footer>
     </article>
   );
