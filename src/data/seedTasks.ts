@@ -1,0 +1,58 @@
+import type { Task } from '../types/task';
+
+export const seedTasks: Task[] = [
+  {
+    id: 'task-101',
+    title: 'Design deployment health widget',
+    description: 'Create a compact widget that shows latest deploy status, owner, and rollback action.',
+    priority: 'high',
+    tags: ['ui', 'devops'],
+    estimatedHours: 6,
+    status: 'backlog',
+  },
+  {
+    id: 'task-102',
+    title: 'Wire sprint metrics selector',
+    description: 'Expose derived cycle-time and completion-rate metrics from the board state.',
+    priority: 'medium',
+    tags: ['state', 'metrics'],
+    estimatedHours: 4,
+    status: 'in-progress',
+  },
+  {
+    id: 'task-103',
+    title: 'Resolve auth callback timeout',
+    description: 'Investigate intermittent callback failures in staging and document the root cause.',
+    priority: 'critical',
+    tags: ['auth', 'bug'],
+    estimatedHours: 8,
+    status: 'blocked',
+  },
+  {
+    id: 'task-104',
+    title: 'Add keyboard QA checklist',
+    description: 'Create a focused accessibility checklist for board navigation and card controls.',
+    priority: 'low',
+    tags: ['a11y', 'qa'],
+    estimatedHours: 3,
+    status: 'done',
+  },
+  {
+    id: 'task-105',
+    title: 'Refine task card density',
+    description: 'Tune spacing, badges, and hover treatment for a cleaner daily planning workflow.',
+    priority: 'medium',
+    tags: ['ui', 'polish'],
+    estimatedHours: 5,
+    status: 'backlog',
+  },
+  {
+    id: 'task-106',
+    title: 'Dockerize production build',
+    description: 'Serve the static Vite bundle from nginx with SPA-friendly fallback routing.',
+    priority: 'high',
+    tags: ['docker', 'infra'],
+    estimatedHours: 2,
+    status: 'done',
+  },
+];
