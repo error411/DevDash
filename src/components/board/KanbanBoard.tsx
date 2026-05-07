@@ -38,7 +38,7 @@ export const KanbanBoard = () => {
   );
 
   return (
-    <section className="grid flex-1 gap-4 xl:grid-cols-4">
+    <section className="grid flex-1 gap-5 sm:gap-4 xl:grid-cols-4">
       {taskStatuses.map((status) => (
         <KanbanColumn key={status} status={status} tasks={tasksByStatus[status]} />
       ))}
