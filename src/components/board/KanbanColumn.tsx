@@ -1,4 +1,5 @@
-import { statusLabels, type Task, type TaskStatus } from '../../types/task';
+import type { AgedTask } from '../../selectors/agedTasks';
+import { statusLabels, type TaskStatus } from '../../types/task';
 import { TaskCard } from './TaskCard';
 
 const columnStyles: Record<TaskStatus, string> = {
@@ -10,7 +11,7 @@ const columnStyles: Record<TaskStatus, string> = {
 
 interface KanbanColumnProps {
   status: TaskStatus;
-  tasks: Task[];
+  tasks: AgedTask[];
 }
 
 export const KanbanColumn = ({ status, tasks }: KanbanColumnProps) => {

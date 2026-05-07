@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { Header } from './components/layout/Header';
 import { SearchFilters } from './components/filters/SearchFilters';
 import { FocusPanel } from './components/FocusPanel';
+import { NewTaskForm } from './components/tasks/NewTaskForm';
 import { StatsGrid } from './components/stats/StatsGrid';
 import { KanbanBoard } from './components/board/KanbanBoard';
 import { darkModeState } from './state/atoms/uiAtom';
@@ -20,6 +21,7 @@ const App = () => {
         <Header />
         <StatsGrid />
         <FocusPanel />
+        <NewTaskForm />
         <SearchFilters />
         <KanbanBoard />
       </div>

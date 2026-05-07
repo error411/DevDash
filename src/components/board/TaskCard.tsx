@@ -1,11 +1,11 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { focusedTaskIdState } from '../../atoms/ui';
+import type { AgedTask } from '../../selectors/agedTasks';
 import { tasksState } from '../../state/atoms/tasksAtom';
 import {
   priorityLabels,
   statusLabels,
   taskStatuses,
-  type Task,
   type TaskPriority,
   type TaskStatus,
 } from '../../types/task';
@@ -18,8 +18,17 @@ const priorityStyles: Record<TaskPriority, string> = {
 };
 
 interface TaskCardProps {
-  task: Task;
+  task: AgedTask;
 }
+
+const formatCreatedDate = (createdAt: string) =>
+  Number.isNaN(new Date(createdAt).getTime())
+    ? 'Unknown'
+    : new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(createdAt));
 
 export const TaskCard = ({ task }: TaskCardProps) => {
   const setTasks = useSetRecoilState(tasksState);
@@ -61,6 +70,21 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             {tag}
           </span>
         ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold">
+        <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-slate-300">
+          Created {formatCreatedDate(task.createdAt)}
+        </span>
+        <span
+          className={`rounded-full px-2.5 py-1 ${
+            task.isStale
+              ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300'
+              : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
+          }`}
+        >
+          {task.isStale ? `Aging ${task.ageInDays}d` : `${task.ageInDays}d old`}
+        </span>
       </div>
 
       <footer className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-3 dark:border-neutral-800">

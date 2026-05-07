@@ -9,6 +9,7 @@ export const seedTasks: Task[] = [
     tags: ['ui', 'devops'],
     estimatedHours: 6,
     status: 'backlog',
+    createdAt: '2026-04-01T09:15:00',
   },
   {
     id: 'task-102',
@@ -18,6 +19,7 @@ export const seedTasks: Task[] = [
     tags: ['state', 'metrics'],
     estimatedHours: 4,
     status: 'in-progress',
+    createdAt: '2026-05-02T14:42:00',
   },
   {
     id: 'task-103',
@@ -27,6 +29,7 @@ export const seedTasks: Task[] = [
     tags: ['auth', 'bug'],
     estimatedHours: 8,
     status: 'blocked',
+    createdAt: '2026-05-03T18:05:00',
   },
   {
     id: 'task-104',
@@ -36,6 +39,7 @@ export const seedTasks: Task[] = [
     tags: ['a11y', 'qa'],
     estimatedHours: 3,
     status: 'done',
+    createdAt: '2026-04-04T07:30:00',
   },
   {
     id: 'task-105',
@@ -45,6 +49,7 @@ export const seedTasks: Task[] = [
     tags: ['ui', 'polish'],
     estimatedHours: 5,
     status: 'backlog',
+    createdAt: '2026-03-05T21:10:00',
   },
   {
     id: 'task-106',
@@ -54,5 +59,6 @@ export const seedTasks: Task[] = [
     tags: ['docker', 'infra'],
     estimatedHours: 2,
     status: 'done',
+    createdAt: '2026-02-06T11:55:00',
   },
 ];

@@ -10,6 +10,7 @@ export interface Task {
   tags: string[];
   estimatedHours: number;
   status: TaskStatus;
+  createdAt: string;
 }
 
 export interface TaskFilters {
