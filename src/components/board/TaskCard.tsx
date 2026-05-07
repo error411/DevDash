@@ -1,9 +1,15 @@
-import { DragEvent, FormEvent, useState } from 'react';
+import { DragEvent, FormEvent, useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { focusedTaskIdState } from '../../atoms/ui';
 import type { AgedTask } from '../../selectors/agedTasks';
 import { tasksState } from '../../state/atoms/tasksAtom';
-import { priorityLabels, type TaskPriority } from '../../types/task';
+import {
+  priorityLabels,
+  statusLabels,
+  taskStatuses,
+  type TaskPriority,
+  type TaskStatus,
+} from '../../types/task';
 
 const priorityStyles: Record<TaskPriority, string> = {
   low: 'bg-slate-100 text-slate-600 dark:bg-neutral-800 dark:text-slate-300',
@@ -42,9 +48,20 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   const focusedTaskId = useRecoilValue(focusedTaskIdState);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDragEnabled, setIsDragEnabled] = useState(false);
   const [notesDraft, setNotesDraft] = useState(task.notes);
   const isFocused = focusedTaskId === task.id;
   const notesPreview = truncateNotes(task.notes);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 640px)');
+    const updateDragPreference = () => setIsDragEnabled(mediaQuery.matches);
+
+    updateDragPreference();
+    mediaQuery.addEventListener('change', updateDragPreference);
+
+    return () => mediaQuery.removeEventListener('change', updateDragPreference);
+  }, []);
 
   const toggleFocus = () => {
     setFocusedTaskId((currentFocusedTaskId) =>
@@ -53,8 +70,29 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   };
 
   const handleDragStart = (event: DragEvent<HTMLElement>) => {
+    if (!isDragEnabled) {
+      event.preventDefault();
+      return;
+    }
+
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/plain', task.id);
+  };
+
+  const updateStatus = (status: TaskStatus) => {
+    setTasks((tasks) =>
+      tasks.map((currentTask) =>
+        currentTask.id === task.id ? { ...currentTask, status } : currentTask,
+      ),
+    );
+  };
+
+  const updatePriority = (priority: TaskPriority) => {
+    setTasks((tasks) =>
+      tasks.map((currentTask) =>
+        currentTask.id === task.id ? { ...currentTask, priority } : currentTask,
+      ),
+    );
   };
 
   const openNotesModal = () => {
@@ -97,7 +135,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             ? 'border-cyan-400 bg-cyan-50 shadow-lg ring-2 ring-cyan-500/25 dark:border-cyan-600 dark:bg-cyan-950/40 dark:ring-cyan-400/25'
             : 'border-slate-300 bg-white hover:border-cyan-300 dark:border-neutral-700 dark:bg-neutral-950 dark:hover:border-cyan-700'
         }`}
-        draggable
+        draggable={isDragEnabled}
         onDragStart={handleDragStart}
       >
         <div className="flex items-start justify-between gap-3">
@@ -154,6 +192,34 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {task.estimatedHours}h
             </span>
+          </div>
+
+          <div className="grid gap-2 sm:hidden">
+            <select
+              className="h-10 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-neutral-700 dark:bg-neutral-900 dark:text-slate-200"
+              value={task.status}
+              onChange={(event) => updateStatus(event.target.value as TaskStatus)}
+              aria-label={`Move ${task.title}`}
+            >
+              {taskStatuses.map((status) => (
+                <option key={status} value={status}>
+                  {statusLabels[status]}
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="h-10 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-neutral-700 dark:bg-neutral-900 dark:text-slate-200"
+              value={task.priority}
+              onChange={(event) => updatePriority(event.target.value as TaskPriority)}
+              aria-label={`Set priority for ${task.title}`}
+            >
+              {Object.entries(priorityLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
