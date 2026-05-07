@@ -147,6 +147,14 @@ export const NewTaskForm = () => {
             <form className="mt-5 grid gap-3 md:grid-cols-2" onSubmit={handleSubmit}>
               <input
                 className="field md:col-span-2"
+                value={form.project}
+                onChange={(event) => updateForm('project', event.target.value)}
+                placeholder="Project, e.g. Viking Battery Website"
+                aria-label="Project"
+              />
+              
+              <input
+                className="field md:col-span-2"
                 value={form.title}
                 onChange={(event) => updateForm('title', event.target.value)}
                 placeholder="Task title"
@@ -161,14 +169,6 @@ export const NewTaskForm = () => {
                 onChange={(event) => updateForm('description', event.target.value)}
                 placeholder="Description"
                 aria-label="Task description"
-              />
-
-              <input
-                className="field md:col-span-2"
-                value={form.project}
-                onChange={(event) => updateForm('project', event.target.value)}
-                placeholder="Project, e.g. Viking Battery Website"
-                aria-label="Project"
               />
 
               <textarea
@@ -205,17 +205,22 @@ export const NewTaskForm = () => {
                 ))}
               </select>
 
-              <input
-                className="field"
-                type="number"
-                min="0.25"
-                step="0.25"
-                value={form.estimatedHours}
-                onChange={(event) => updateForm('estimatedHours', event.target.value)}
-                placeholder="Estimated hours"
-                aria-label="Estimated hours"
-                required
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  className="field w-24"
+                  type="number"
+                  min="0.25"
+                  step="0.25"
+                  value={form.estimatedHours}
+                  onChange={(event) => updateForm('estimatedHours', event.target.value)}
+                  placeholder="1"
+                  aria-label="Estimated hours"
+                  required
+                />
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                  hour(s)
+                </span>
+              </div>
 
               <input
                 className="field"
