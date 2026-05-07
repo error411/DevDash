@@ -88,7 +88,7 @@ export const NewTaskForm = () => {
   };
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft dark:border-neutral-800 dark:bg-neutral-900">
+    <section className="fixed inset-x-5 bottom-4 z-40 rounded-lg border border-slate-200 bg-white p-4 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 sm:static sm:inset-auto sm:z-auto sm:shadow-soft">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-600 dark:text-slate-300">
