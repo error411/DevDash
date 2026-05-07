@@ -44,6 +44,12 @@ export const TaskCard = ({ task }: TaskCardProps) => {
     );
   };
 
+  const toggleFocus = () => {
+    setFocusedTaskId((currentFocusedTaskId) =>
+      currentFocusedTaskId === task.id ? null : task.id,
+    );
+  };
+
   return (
     <article
       className={`group rounded-lg border p-4 transition hover:-translate-y-0.5 hover:shadow-md ${
@@ -109,7 +115,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         </select>
         <button
           type="button"
-          onClick={() => setFocusedTaskId(task.id)}
+          onClick={toggleFocus}
           className={`h-10 rounded-md border px-3 text-sm font-semibold transition ${
             isFocused
               ? 'border-cyan-300 bg-cyan-600 text-white hover:bg-cyan-700 dark:border-cyan-600 dark:bg-cyan-500 dark:text-cyan-950 dark:hover:bg-cyan-400'
