@@ -52,10 +52,10 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
   return (
     <article
-      className={`group rounded-lg border p-4 transition hover:-translate-y-0.5 hover:shadow-md ${
+      className={`group rounded-lg border p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
         isFocused
-          ? 'border-cyan-300 bg-cyan-50 shadow-md ring-2 ring-cyan-500/20 dark:border-cyan-700 dark:bg-cyan-950/30 dark:ring-cyan-400/20'
-          : 'border-slate-200 bg-white hover:border-cyan-200 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-cyan-800'
+          ? 'border-cyan-400 bg-cyan-50 shadow-lg ring-2 ring-cyan-500/25 dark:border-cyan-600 dark:bg-cyan-950/40 dark:ring-cyan-400/25'
+          : 'border-slate-300 bg-white hover:border-cyan-300 dark:border-neutral-700 dark:bg-neutral-950 dark:hover:border-cyan-700'
       }`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -87,7 +87,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
 
       <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold">
         <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-slate-300">
-          Created {formatCreatedDate(task.createdAt)}
+          {formatCreatedDate(task.createdAt)}
         </span>
         <span
           className={`rounded-full px-2.5 py-1 ${
@@ -100,7 +100,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         </span>
       </div>
 
-      <footer className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-3 dark:border-neutral-800">
+      <footer className="mt-4 flex flex-col gap-3 border-t border-slate-200 pt-3 dark:border-neutral-800">
         <div className="flex items-center justify-between text-sm">
           <span className="font-medium text-slate-500 dark:text-slate-400">Estimate</span>
           <span className="font-semibold text-slate-900 dark:text-slate-100">

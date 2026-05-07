@@ -28,7 +28,7 @@ export const KanbanColumn = ({ status, tasks }: KanbanColumnProps) => {
         </span>
       </header>
 
-      <div className="flex flex-1 flex-col gap-3 p-3">
+      <div className="flex flex-1 flex-col gap-4 p-3">
         {tasks.length > 0 ? (
           tasks.map((task) => <TaskCard key={task.id} task={task} />)
         ) : (
