@@ -88,7 +88,7 @@ export const NewTaskForm = () => {
   };
 
   return (
-    <section className="border-t border-slate-200 bg-white px-0 pb-[env(safe-area-inset-bottom)] pt-4 dark:border-neutral-800 dark:bg-neutral-900 sm:rounded-lg sm:border sm:p-4 sm:shadow-soft">
+    <section className="border-t border-slate-200 bg-white px-5 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 sm:rounded-lg sm:border sm:p-4 sm:shadow-soft">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-600 dark:text-slate-300">

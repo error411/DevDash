@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <main className="min-h-screen bg-slate-100 text-slate-950 transition-colors duration-300 dark:bg-neutral-950 dark:text-slate-100">
-      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-5 py-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-5 pb-36 pt-5 sm:px-6 sm:py-5 lg:px-8">
         <Header />
         <StatsGrid />
         <section className="grid gap-4 lg:grid-cols-2">
@@ -28,7 +28,7 @@ const App = () => {
         </section>
         <SearchFilters />
         <KanbanBoard />
-        <div className="sm:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-40 sm:hidden">
           <NewTaskForm />
         </div>
       </div>
