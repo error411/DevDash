@@ -59,7 +59,14 @@ export const TaskCard = ({ task }: TaskCardProps) => {
       }`}
     >
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-base font-semibold leading-6 text-slate-950 dark:text-white">{task.title}</h3>
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
+            {task.project}
+          </p>
+          <h3 className="text-base font-semibold leading-6 text-slate-950 dark:text-white">
+            {task.title}
+          </h3>
+        </div>
         <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${priorityStyles[task.priority]}`}>
           {priorityLabels[task.priority]}
         </span>

@@ -9,6 +9,7 @@ const migrateTasks = (tasks: Task[]) =>
   tasks.map((task) => ({
     ...task,
     createdAt: task.createdAt ?? seedTasksById.get(task.id)?.createdAt ?? new Date().toISOString(),
+    project: task.project ?? seedTasksById.get(task.id)?.project ?? 'Unassigned',
   }));
 
 export const tasksState = atom<Task[]>({

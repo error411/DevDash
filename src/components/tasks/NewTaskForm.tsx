@@ -13,6 +13,7 @@ import {
 interface NewTaskFormState {
   title: string;
   description: string;
+  project: string;
   priority: TaskPriority;
   tags: string;
   estimatedHours: string;
@@ -22,6 +23,7 @@ interface NewTaskFormState {
 const initialFormState: NewTaskFormState = {
   title: '',
   description: '',
+  project: '',
   priority: 'medium',
   tags: '',
   estimatedHours: '1',
@@ -69,6 +71,7 @@ export const NewTaskForm = () => {
       id: createTaskId(),
       title,
       description: form.description.trim(),
+      project: form.project.trim() || 'Unassigned',
       priority: form.priority,
       tags: parseTags(form.tags),
       estimatedHours,
@@ -155,6 +158,14 @@ export const NewTaskForm = () => {
                 onChange={(event) => updateForm('description', event.target.value)}
                 placeholder="Description"
                 aria-label="Task description"
+              />
+
+              <input
+                className="field md:col-span-2"
+                value={form.project}
+                onChange={(event) => updateForm('project', event.target.value)}
+                placeholder="Project, e.g. Viking Battery Website"
+                aria-label="Project"
               />
 
               <select
