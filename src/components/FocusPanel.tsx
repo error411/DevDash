@@ -37,7 +37,7 @@ export const FocusPanel = () => {
           onClick={() => setFocusedTaskId(null)}
           className="h-10 rounded-md border border-cyan-300 px-3 text-sm font-semibold text-cyan-800 transition hover:bg-cyan-100 dark:border-cyan-800 dark:text-cyan-200 dark:hover:bg-cyan-950"
         >
-          Clear focus
+          Clear
         </button>
       </div>
     </section>
