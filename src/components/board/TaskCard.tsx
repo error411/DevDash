@@ -41,6 +41,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   const setFocusedTaskId = useSetRecoilState(focusedTaskIdState);
   const focusedTaskId = useRecoilValue(focusedTaskIdState);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [notesDraft, setNotesDraft] = useState(task.notes);
   const isFocused = focusedTaskId === task.id;
   const notesPreview = truncateNotes(task.notes);
@@ -74,6 +75,18 @@ export const TaskCard = ({ task }: TaskCardProps) => {
       ),
     );
     setIsNotesModalOpen(false);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const deleteTask = () => {
+    setTasks((tasks) => tasks.filter((currentTask) => currentTask.id !== task.id));
+    setFocusedTaskId((currentFocusedTaskId) =>
+      currentFocusedTaskId === task.id ? null : currentFocusedTaskId,
+    );
+    setIsDeleteModalOpen(false);
   };
 
   return (
@@ -162,6 +175,13 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             >
               {isFocused ? 'Focused' : 'Focus'}
             </button>
+            <button
+              type="button"
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="col-span-2 justify-self-start text-xs text-slate-400 underline-offset-4 transition hover:text-rose-600 hover:underline dark:text-slate-500 dark:hover:text-rose-300"
+            >
+              Delete task
+            </button>
           </div>
         </footer>
       </article>
@@ -234,6 +254,49 @@ export const TaskCard = ({ task }: TaskCardProps) => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6 backdrop-blur-sm"
+          role="presentation"
+          onMouseDown={closeDeleteModal}
+        >
+          <div
+            className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-5 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`delete-task-title-${task.id}`}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <h2
+              id={`delete-task-title-${task.id}`}
+              className="text-lg font-semibold text-slate-950 dark:text-white"
+            >
+              Delete Task?
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+              This will permanently remove "{task.title}" from the board.
+            </p>
+
+            <div className="mt-5 flex justify-end gap-2 border-t border-slate-100 pt-4 dark:border-neutral-800">
+              <button
+                type="button"
+                onClick={closeDeleteModal}
+                className="h-10 rounded-md border border-slate-200 px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-neutral-700 dark:text-slate-200 dark:hover:bg-neutral-800"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={deleteTask}
+                className="h-10 rounded-md border border-rose-600 bg-rose-600 px-4 text-sm font-semibold text-white transition hover:bg-rose-700 dark:border-rose-500 dark:bg-rose-500 dark:text-rose-950 dark:hover:bg-rose-400"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}
