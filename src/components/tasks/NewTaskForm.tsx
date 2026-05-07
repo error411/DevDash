@@ -102,7 +102,7 @@ export const NewTaskForm = () => {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="h-10 rounded-md border border-slate-200 px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700 dark:border-neutral-700 dark:text-slate-200 dark:hover:border-cyan-700 dark:hover:bg-cyan-950/40 dark:hover:text-cyan-200"
+          className="h-10 rounded-md border border-cyan-600 bg-cyan-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-md dark:border-cyan-500 dark:bg-cyan-500 dark:text-cyan-950 dark:hover:bg-cyan-400"
         >
           New Task
         </button>
